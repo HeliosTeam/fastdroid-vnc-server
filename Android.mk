@@ -1,7 +1,12 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
+# Enable PIE manually. Will get reset on $(CLEAR_VARS). This
+# is what enabling PIE translates to behind the scenes.
+LOCAL_CFLAGS += -fPIE
+LOCAL_LDFLAGS += -fPIE -pie
 
 LIB_VNC_ROOT := LibVNCServer-0.9.7
+LOCAL_DISABLE_FORMAT_STRING_CHECKS := true
 LIB_VNC_SVR_PATH := $(LIB_VNC_ROOT)/libvncserver
 LIB_VNC_SVR_SRC := \
 	main.c \
@@ -50,6 +55,6 @@ LOCAL_LDLIBS += -lz
 #LOCAL_SHARED_LIBRARIES := libz
 LOCAL_STATIC_LIBRARIES := libjpeg
 
-LOCAL_MODULE:= fvnc
+LOCAL_MODULE:= fvnc 
 
 include $(BUILD_EXECUTABLE)

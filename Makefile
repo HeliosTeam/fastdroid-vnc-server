@@ -37,7 +37,10 @@ LOCAL_SRC_FILES := \
 	fbvncserver.c \
 	$(addprefix $(LIB_VNC_SVR_PATH)/,$(LIB_VNC_SVR_SRC))
 
+SYSROOT=/home/kevin/Working/ElinkMe/android-toolchain/arm/sysroot
+
 LOCAL_C_INCLUDES := \
+	$(SYSROOT)/usr \
 	$(LOCAL_PATH) \
 	$(LOCAL_PATH)/$(LIB_VNC_SVR_PATH) \
 	$(LOCAL_PATH)/$(LIB_VNC_ROOT) \
@@ -45,15 +48,20 @@ LOCAL_C_INCLUDES := \
 	external/jpeg
 
 LOCAL_SHARED_LIBRARIES := -lz -lpthread
-LIBJPEG_PATH := /usr/lib
-LOCAL_STATIC_LIBRARIES := $(LIBJPEG_PATH)/libjpeg.a 
+LIBJPEG_PATH := /home/kevin/Working/ElinkMe/vncserver/fastdroid-vnc-server/obj/local/x86/
+#LOCAL_STATIC_LIBRARIES := $(LIBJPEG_PATH)/libjpeg.a 
 
 LOCAL_MODULE:= fastdroid-vnc
 
-# build 
+SYSROOT=/home/kevin/Working/ElinkMe/android-toolchain/arm/sysroot
+CFLAGS += --sysroot=$(SYSROOT)
 
-GCC := gcc
-LD := gcc
+
+# build 
+TOOLCHAIN=/home/kevin/Working/ElinkMe/android-toolchain/arm/bin/arm-linux-androideabi-
+
+GCC := $(TOOLCHAIN)gcc
+LD := $(TOOLCHAIN)gcc
 
 LOCAL_OBJ_FILES := $(subst .c,.o,$(LOCAL_SRC_FILES))
 C_INCLUDES := $(addprefix -I,$(LOCAL_C_INCLUDES))
